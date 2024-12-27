@@ -1,0 +1,38 @@
+.background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgb(145, 128, 128);
+}
+
+.image {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.img {
+  max-width: 800px;
+  height: 500px;
+}
+
+.header {
+  text-align: center;
+}
+
+.text {
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+}
+
+.btn {
+  margin-top: 12px;
+  margin-left: 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 44px;
+  width: 100px;
+}

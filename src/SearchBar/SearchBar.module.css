@@ -1,0 +1,32 @@
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  padding: 20px;
+  background-color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #373cd3;
+}
+
+.input {
+  width: 400px;
+  padding: 10px;
+  font-size: 16px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  transition: border-color 0.3s;
+  margin-right: 15px;
+}
+
+.form {
+}
+
+.btn {
+  cursor: pointer;
+  border-radius: 4px;
+  height: 44px;
+  width: 80px;
+}

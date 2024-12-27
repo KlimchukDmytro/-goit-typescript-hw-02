@@ -1,0 +1,11 @@
+.imgList {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.imgItem {
+  width: calc((100% - 48px) / 5);
+  overflow: hidden;
+}
