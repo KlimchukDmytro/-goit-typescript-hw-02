@@ -1,28 +1,16 @@
 import Modal from "react-modal";
 import s from "./ImageModal.module.css";
+import { Image } from "../types";
 
 Modal.setAppElement("#root");
 
 interface ImageModalProps {
   isOpen: boolean;
   closeModal: () => void;
-  img: {
-    alt_description: string;
-    urls: {
-      regular: string;
-    };
-    likes: number;
-    description: string;
-    user: {
-      name: string;
-      location?: string;
-      total_photos: number;
-      portfolio_url?: string;
-    };
-  };
+  img: Image;
 }
 
-const ImageModal = ({ isOpen, closeModal, img }: ImageModalProps) => {
+const ImageModal: React.FC<ImageModalProps> = ({ isOpen, closeModal, img }) => {
   return (
     <Modal
       isOpen={isOpen}
@@ -35,16 +23,16 @@ const ImageModal = ({ isOpen, closeModal, img }: ImageModalProps) => {
         <img
           className={s.img}
           src={img.urls.regular}
-          alt={img.alt_description}
+          alt={img.alt_description ?? undefined}
         />
       </div>
       <div className={s.text}>
         <p>Likes: {img.likes}</p>
         <p>{img.description}</p>
-        <p>Author: {img.user.name}</p>
-        {img.user.location && <p>Location: {img.user.location}</p>}
-        <p>Total photos: {img.user.total_photos}</p>
-        {img.user.portfolio_url && (
+        <p>Author: {img.user?.name}</p>
+        {img.user?.location && <p>Location: {img.user.location}</p>}
+        <p>Total photos: {img.user?.total_photos}</p>
+        {img.user?.portfolio_url && (
           <a
             href={img.user.portfolio_url}
             target="_blank"

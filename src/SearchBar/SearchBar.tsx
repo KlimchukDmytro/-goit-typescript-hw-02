@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import { toast } from "react-hot-toast";
 import s from "./SearchBar.module.css";
 
@@ -7,10 +7,12 @@ interface SearchBarProps {
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const handleSubmit = (evt: React.FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const form = evt.target as HTMLFormElement;
-    const searchTerm = form.elements.searchTerm.value.trim();
+
+    const searchTerm = inputRef.current?.value.trim() || "";
 
     if (searchTerm.length < 3) {
       toast.error("Search text must be longer than 2 characters.");
@@ -18,13 +20,15 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSubmit }) => {
     }
 
     onSubmit(searchTerm);
-    form.reset();
+
+    evt.currentTarget.reset();
   };
 
   return (
     <header className={s.header}>
       <form className={s.form} onSubmit={handleSubmit}>
         <input
+          ref={inputRef}
           className={s.input}
           name="searchTerm"
           type="text"
