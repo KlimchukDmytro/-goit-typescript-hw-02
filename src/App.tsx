@@ -4,20 +4,19 @@ import ErrorMessage from "./ErrorMessage/ErrorMessage";
 import ImageGallery from "./ImageGallery/ImageGallery";
 import Loader from "./Loader/Loader";
 import SearchBar from "./SearchBar/SearchBar";
-import { fetchData } from "./unsplash-api";
+import { fetchData, ImageData } from "./unsplash-api";
 import LoadMoreBtn from "./LoadMoreBtn/LoadMoreBtn";
 import ImageModal from "./ImageModal/ImageModal";
 import { Toaster, toast } from "react-hot-toast";
-import { Image } from "./types";
 import axios from "axios";
 
 function App() {
-  const [results, setResults] = useState<Image[]>([]);
+  const [results, setResults] = useState<ImageData[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState<string>("");
   const [imageModalIsOpen, setImageModalIsOpen] = useState<boolean>(false);
-  const [imageModal, setImageModal] = useState<Image | null>(null);
+  const [imageModal, setImageModal] = useState<ImageData | null>(null);
   const [query, setQuery] = useState<string>("");
   const [page, setPage] = useState<number>(1);
   const [totalPages, setTotalPages] = useState<number>(0);
@@ -32,12 +31,10 @@ function App() {
         setErrorMessage("");
 
         const apiResponse = await fetchData(query, page);
-        const newResults = apiResponse.data.results as Image[];
+        setResults((prevResults) => [...prevResults, ...apiResponse.results]);
+        setTotalPages(apiResponse.total_pages);
 
-        setResults((prevResults) => [...prevResults, ...newResults]);
-        setTotalPages(apiResponse.data.total_pages);
-
-        if (newResults.length === 0) {
+        if (apiResponse.results.length === 0) {
           toast.error("No images found for your query.");
         }
       } catch (error) {
@@ -51,7 +48,7 @@ function App() {
     getImages();
   }, [query, page]);
 
-  function openModal(img: Image) {
+  function openModal(img: ImageData) {
     setImageModal(img);
     setImageModalIsOpen(true);
   }
